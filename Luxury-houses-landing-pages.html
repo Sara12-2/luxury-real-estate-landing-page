@@ -64,6 +64,17 @@
       100% { background-position: 1000px 0; }
     }
     
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
     .fade-in-up {
       animation: fadeInUp 0.8s ease forwards;
     }
@@ -167,13 +178,6 @@
       transition: width 0.3s ease;
     }
     
-    /* Skeleton loading */
-    .skeleton {
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 1000px 100%;
-      animation: shimmer 2s infinite;
-    }
-    
     /* Back to top button */
     #backToTop {
       transition: all 0.3s ease;
@@ -184,27 +188,102 @@
       box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.4);
     }
     
-    /* Modal animation */
-    .modal-enter {
-      animation: fadeInUp 0.3s ease;
+    /* Modal Styles - Improved */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
     }
     
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 10px;
+    .modal.active {
+      display: flex;
+      animation: modalFadeIn 0.3s ease;
     }
     
-    ::-webkit-scrollbar-track {
+    .modal-content {
+      background: white;
+      border-radius: 24px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .modal-header {
+      position: sticky;
+      top: 0;
+      background: white;
+      padding: 20px 24px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+    
+    .modal-close {
+      background: #f3f4f6;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-close:hover {
+      background: #fee2e2;
+      transform: rotate(90deg);
+    }
+    
+    .modal-close i {
+      font-size: 20px;
+      color: #6b7280;
+    }
+    
+    .modal-close:hover i {
+      color: #ef4444;
+    }
+    
+    .modal-body {
+      padding: 24px;
+    }
+    
+    /* Custom scrollbar for modal */
+    .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .modal-content::-webkit-scrollbar-track {
       background: #f1f1f1;
+      border-radius: 4px;
     }
     
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, #d4af37 0%, #b3922c 100%);
-      border-radius: 5px;
+    .modal-content::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 4px;
     }
     
-    ::-webkit-scrollbar-thumb:hover {
-      background: #b3922c;
+    /* Property card image */
+    .property-img {
+      transition: transform 0.5s ease;
+    }
+    
+    .property-card:hover .property-img {
+      transform: scale(1.05);
     }
     
     /* Responsive fixes */
@@ -212,21 +291,10 @@
       .stat-number {
         font-size: 2rem;
       }
-    }
-    
-    /* Loading spinner */
-    .spinner {
-      border: 3px solid rgba(212, 175, 55, 0.3);
-      border-top: 3px solid #d4af37;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      .modal-content {
+        width: 95%;
+        max-height: 90vh;
+      }
     }
   </style>
 </head>
@@ -369,11 +437,11 @@
     <div class="container mx-auto px-6 text-center">
       <h2 class="text-3xl font-bold mb-8">Browse by <span class="text-[#d4af37]">Category</span></h2>
       <div class="flex flex-wrap justify-center gap-4">
-        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer">🏢 Apartments</span>
-        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer">🏡 Villas</span>
-        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer">🏭 Commercial</span>
-        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer">✨ Luxury Homes</span>
-        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer">📋 Rentals</span>
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer"><i class="fas fa-building mr-2"></i> Apartments</span>
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer"><i class="fas fa-home mr-2"></i> Villas</span>
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer"><i class="fas fa-store mr-2"></i> Commercial</span>
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer"><i class="fas fa-crown mr-2"></i> Luxury Homes</span>
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold hover:bg-[#d4af37] hover:text-white transition-all cursor-pointer"><i class="fas fa-file-signature mr-2"></i> Rentals</span>
       </div>
     </div>
   </section>
@@ -410,7 +478,7 @@
             <i class="fab fa-linkedin-in hover:text-[#d4af37] cursor-pointer transition-all hover:scale-125"></i>
             <i class="fab fa-twitter hover:text-[#d4af37] cursor-pointer transition-all hover:scale-125"></i>
           </div>
-          <button class="mt-4 text-sm text-[#d4af37] hover:underline">Contact Agent →</button>
+          <button class="mt-4 text-sm text-[#d4af37] hover:underline">Contact Agent <i class="fas fa-arrow-right ml-1"></i></button>
         </div>
         <div class="bg-white rounded-2xl p-6 card-shadow hover-lift">
           <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-28 h-28 rounded-full mx-auto object-cover border-4 border-[#d4af37]">
@@ -421,7 +489,7 @@
             <i class="fab fa-linkedin-in hover:text-[#d4af37] cursor-pointer transition-all hover:scale-125"></i>
             <i class="fab fa-twitter hover:text-[#d4af37] cursor-pointer transition-all hover:scale-125"></i>
           </div>
-          <button class="mt-4 text-sm text-[#d4af37] hover:underline">Contact Agent →</button>
+          <button class="mt-4 text-sm text-[#d4af37] hover:underline">Contact Agent <i class="fas fa-arrow-right ml-1"></i></button>
         </div>
         <div class="bg-white rounded-2xl p-6 card-shadow hover-lift">
           <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-28 h-28 rounded-full mx-auto object-cover border-4 border-[#d4af37]">
@@ -432,7 +500,7 @@
             <i class="fab fa-linkedin-in hover:text-[#d4af37] cursor-pointer transition-all hover:scale-125"></i>
             <i class="fab fa-twitter hover:text-[#d4af37] cursor-pointer transition-all hover:scale-125"></i>
           </div>
-          <button class="mt-4 text-sm text-[#d4af37] hover:underline">Contact Agent →</button>
+          <button class="mt-4 text-sm text-[#d4af37] hover:underline">Contact Agent <i class="fas fa-arrow-right ml-1"></i></button>
         </div>
       </div>
     </div>
@@ -455,6 +523,7 @@
             </div>
           </div>
           <p class="mt-4 italic">"Exceptional service! Found my dream villa in Dubai within weeks. Highly recommended."</p>
+          <i class="fas fa-quote-right text-3xl text-gray-300 mt-3 block text-right"></i>
         </div>
         <div class="bg-gray-50 p-8 rounded-2xl shadow-md hover:shadow-xl transition-all">
           <div class="flex items-center gap-4">
@@ -465,6 +534,7 @@
             </div>
           </div>
           <p class="mt-4 italic">"Professional agents & seamless process. The Manhattan penthouse is everything I wanted!"</p>
+          <i class="fas fa-quote-right text-3xl text-gray-300 mt-3 block text-right"></i>
         </div>
       </div>
     </div>
@@ -494,7 +564,7 @@
         </form>
         
         <div id="formSuccess" class="hidden mt-4 text-center text-green-600 font-semibold bg-green-50 p-3 rounded-lg">
-          ✔ Thank you! We'll contact you soon.
+          <i class="fas fa-check-circle mr-2"></i> Thank you! We'll contact you soon.
         </div>
         
         <!-- Trust Badges -->
@@ -532,16 +602,16 @@
       <div>
         <h4 class="text-white font-semibold mb-3">Quick Links</h4>
         <ul class="space-y-2">
-          <li><a href="#home" class="hover:text-[#d4af37] transition">Home</a></li>
-          <li><a href="#properties" class="hover:text-[#d4af37] transition">Properties</a></li>
-          <li><a href="#agents" class="hover:text-[#d4af37] transition">Agents</a></li>
-          <li><a href="#contact" class="hover:text-[#d4af37] transition">Contact</a></li>
+          <li><a href="#home" class="hover:text-[#d4af37] transition"><i class="fas fa-chevron-right text-xs mr-2"></i>Home</a></li>
+          <li><a href="#properties" class="hover:text-[#d4af37] transition"><i class="fas fa-chevron-right text-xs mr-2"></i>Properties</a></li>
+          <li><a href="#agents" class="hover:text-[#d4af37] transition"><i class="fas fa-chevron-right text-xs mr-2"></i>Agents</a></li>
+          <li><a href="#contact" class="hover:text-[#d4af37] transition"><i class="fas fa-chevron-right text-xs mr-2"></i>Contact</a></li>
         </ul>
       </div>
       <div>
         <h4 class="text-white font-semibold mb-3">Contact Info</h4>
-        <p><i class="fas fa-phone-alt mr-2 text-[#d4af37]"></i> +1 (888) 892-4678</p>
-        <p><i class="fas fa-envelope mr-2 text-[#d4af37]"></i> hello@luxestate.com</p>
+        <p class="mb-2"><i class="fas fa-phone-alt mr-2 text-[#d4af37]"></i> +1 (888) 892-4678</p>
+        <p class="mb-2"><i class="fas fa-envelope mr-2 text-[#d4af37]"></i> hello@luxestate.com</p>
         <p><i class="fas fa-map-marker-alt mr-2 text-[#d4af37]"></i> Dubai | NYC | London</p>
       </div>
       <div>
@@ -566,14 +636,16 @@
     <i class="fas fa-arrow-up"></i>
   </button>
 
-  <!-- Property Modal -->
-  <div id="propertyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 items-center justify-center">
-    <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto modal-enter">
-      <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center">
+  <!-- Property Modal - Improved -->
+  <div id="propertyModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
         <h3 class="text-xl font-bold" id="modalTitle"></h3>
-        <button id="closeModal" class="text-2xl hover:text-[#d4af37]">&times;</button>
+        <button id="closeModal" class="modal-close">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
-      <div id="modalContent" class="p-6"></div>
+      <div id="modalContent" class="modal-body"></div>
     </div>
   </div>
 
@@ -590,7 +662,7 @@
         sqft: 4500,
         image: "https://images.pexels.com/photos/2587054/pexels-photo-2587054.jpeg?auto=compress&cs=tinysrgb&w=600",
         description: "Stunning beachfront villa with private pool, ocean views, and premium finishes. Includes smart home technology and landscaped gardens.",
-        features: ["Private Beach Access", "Infinity Pool", "Home Cinema", "Smart Home System"]
+        features: ["Private Beach Access", "Infinity Pool", "Home Cinema", "Smart Home System", "Landscaped Gardens", "Private Parking"]
       },
       {
         id: 2,
@@ -601,8 +673,8 @@
         baths: 4.5,
         sqft: 3200,
         image: "https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=600",
-        description: "Luxurious penthouse with panoramic city views, floor-to-ceiling windows, and exclusive amenities.",
-        features: ["Sky Lounge", "Concierge Service", "Fitness Center", "Rooftop Terrace"]
+        description: "Luxurious penthouse with panoramic city views, floor-to-ceiling windows, and exclusive amenities in the heart of Manhattan.",
+        features: ["Sky Lounge", "Concierge Service", "Fitness Center", "Rooftop Terrace", "Private Elevator", "Smart Home"]
       },
       {
         id: 3,
@@ -613,8 +685,8 @@
         baths: 7,
         sqft: 6200,
         image: "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600",
-        description: "Elegant Victorian mansion in prestigious Knightsbridge, featuring original period details and modern luxury.",
-        features: ["Private Garden", "Wine Cellar", "Home Office", "Security System"]
+        description: "Elegant Victorian mansion in prestigious Knightsbridge, featuring original period details and modern luxury amenities.",
+        features: ["Private Garden", "Wine Cellar", "Home Office", "Security System", "Staff Quarters", "Swimming Pool"]
       }
     ];
 
@@ -624,8 +696,10 @@
       if (!container) return;
       
       container.innerHTML = filteredProperties.map(prop => `
-        <div class="bg-white rounded-2xl overflow-hidden card-shadow hover-lift cursor-pointer" onclick="openPropertyModal(${prop.id})">
-          <img src="${prop.image}" alt="${prop.title}" class="h-56 w-full object-cover transition-transform hover:scale-105 duration-500" loading="lazy">
+        <div class="bg-white rounded-2xl overflow-hidden card-shadow hover-lift property-card cursor-pointer" onclick="openPropertyModal(${prop.id})">
+          <div class="overflow-hidden h-56">
+            <img src="${prop.image}" alt="${prop.title}" class="property-img w-full h-full object-cover">
+          </div>
           <div class="p-5">
             <div class="flex justify-between items-start">
               <h3 class="text-xl font-bold">${prop.title}</h3>
@@ -638,14 +712,14 @@
               <span><i class="fas fa-arrows-alt"></i> ${prop.sqft} sqft</span>
             </div>
             <button class="mt-5 w-full py-2.5 border-2 border-[#d4af37] text-[#d4af37] rounded-xl font-medium hover:bg-[#d4af37] hover:text-white transition-all" onclick="event.stopPropagation(); openPropertyModal(${prop.id})">
-              View Details
+              <i class="fas fa-eye mr-2"></i> View Details
             </button>
           </div>
         </div>
       `).join('');
     }
 
-    // Open Property Modal
+    // Open Property Modal - Improved
     function openPropertyModal(id) {
       const property = properties.find(p => p.id === id);
       if (!property) return;
@@ -656,32 +730,49 @@
       
       modalTitle.textContent = property.title;
       modalContent.innerHTML = `
-        <img src="${property.image}" alt="${property.title}" class="w-full h-64 object-cover rounded-lg mb-4">
-        <div class="flex justify-between items-center mb-4">
-          <span class="text-2xl font-bold text-[#d4af37]">${property.price}</span>
-          <span class="text-gray-500"><i class="fas fa-map-marker-alt"></i> ${property.location}</span>
+        <img src="${property.image}" alt="${property.title}" class="w-full h-72 object-cover rounded-xl mb-5">
+        
+        <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+          <span class="text-3xl font-bold text-[#d4af37]">${property.price}</span>
+          <span class="text-gray-500 bg-gray-100 px-3 py-1 rounded-full"><i class="fas fa-map-marker-alt mr-1"></i> ${property.location}</span>
         </div>
-        <p class="text-gray-600 mb-4">${property.description}</p>
-        <div class="grid grid-cols-3 gap-3 mb-4 text-center">
-          <div class="bg-gray-50 p-2 rounded"><i class="fas fa-bed text-[#d4af37]"></i><br>${property.beds} Beds</div>
-          <div class="bg-gray-50 p-2 rounded"><i class="fas fa-bath text-[#d4af37]"></i><br>${property.baths} Baths</div>
-          <div class="bg-gray-50 p-2 rounded"><i class="fas fa-arrows-alt text-[#d4af37]"></i><br>${property.sqft} sqft</div>
+        
+        <p class="text-gray-600 mb-5 leading-relaxed">${property.description}</p>
+        
+        <div class="grid grid-cols-3 gap-3 mb-5 text-center">
+          <div class="bg-gray-50 p-3 rounded-xl"><i class="fas fa-bed text-[#d4af37] text-xl mb-1 block"></i> <strong>${property.beds}</strong> Beds</div>
+          <div class="bg-gray-50 p-3 rounded-xl"><i class="fas fa-bath text-[#d4af37] text-xl mb-1 block"></i> <strong>${property.baths}</strong> Baths</div>
+          <div class="bg-gray-50 p-3 rounded-xl"><i class="fas fa-arrows-alt text-[#d4af37] text-xl mb-1 block"></i> <strong>${property.sqft}</strong> sqft</div>
         </div>
-        <h4 class="font-bold mb-2">Key Features:</h4>
-        <ul class="grid grid-cols-2 gap-2 mb-4">
-          ${property.features.map(f => `<li><i class="fas fa-check-circle text-[#d4af37] mr-2"></i>${f}</li>`).join('')}
-        </ul>
-        <button onclick="closeAndSchedule('${property.title}')" class="w-full bg-[#d4af37] text-white py-3 rounded-lg font-semibold hover:bg-[#b3922c] transition-all">
-          Schedule Viewing
-        </button>
+        
+        <h4 class="font-bold mb-3 text-lg"><i class="fas fa-gem text-[#d4af37] mr-2"></i>Key Features:</h4>
+        <div class="grid grid-cols-2 gap-2 mb-5">
+          ${property.features.map(f => `<div class="flex items-center"><i class="fas fa-check-circle text-[#d4af37] mr-2 text-sm"></i><span class="text-gray-600">${f}</span></div>`).join('')}
+        </div>
+        
+        <div class="flex gap-3 mt-4">
+          <button onclick="closeAndSchedule('${property.title}')" class="flex-1 bg-[#d4af37] text-white py-3 rounded-xl font-semibold hover:bg-[#b3922c] transition-all">
+            <i class="fas fa-calendar-alt mr-2"></i> Schedule Viewing
+          </button>
+          <button onclick="closeModal()" class="flex-1 border-2 border-gray-300 text-gray-600 py-3 rounded-xl font-semibold hover:border-[#d4af37] hover:text-[#d4af37] transition-all">
+            <i class="fas fa-times mr-2"></i> Close
+          </button>
+        </div>
       `;
       
-      modal.classList.remove('hidden');
-      modal.style.display = 'flex';
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close Modal Function
+    function closeModal() {
+      const modal = document.getElementById('propertyModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
     }
 
     function closeAndSchedule(propertyName) {
-      document.getElementById('propertyModal').classList.add('hidden');
+      closeModal();
       document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
       document.getElementById('message').value = `I'm interested in ${propertyName}. Please contact me for a viewing.`;
     }
@@ -689,8 +780,6 @@
     // Search/Filter Functionality
     function filterProperties() {
       const location = document.getElementById('searchLocation')?.value.toLowerCase() || '';
-      const propertyType = document.getElementById('propertyType')?.value || '';
-      const budget = document.getElementById('budgetRange')?.value || '';
       
       const filtered = properties.filter(prop => {
         let match = true;
@@ -815,11 +904,6 @@
         successMsg.classList.remove('hidden'); 
         contactForm.reset(); 
         setTimeout(() => successMsg.classList.add('hidden'), 4000);
-        
-        // Track form submission
-        if(typeof gtag !== 'undefined') {
-          gtag('event', 'form_submission', { 'event_category': 'lead', 'event_label': 'consultation' });
-        }
       });
     }
 
@@ -828,7 +912,7 @@
     if(newsletterBtn) {
       newsletterBtn.addEventListener('click', () => {
         const email = document.getElementById('newsletterEmail').value;
-        if(email) {
+        if(email && email.includes('@')) {
           alert('Thank you for subscribing to our newsletter!');
           document.getElementById('newsletterEmail').value = '';
         } else {
@@ -852,21 +936,28 @@
       });
     }
 
-    // Modal close
-    const closeModal = document.getElementById('closeModal');
+    // Modal close handlers
+    const closeModalBtn = document.getElementById('closeModal');
     const propertyModal = document.getElementById('propertyModal');
-    if(closeModal) {
-      closeModal.addEventListener('click', () => {
-        propertyModal.classList.add('hidden');
-      });
+    
+    if(closeModalBtn) {
+      closeModalBtn.addEventListener('click', closeModal);
     }
+    
     if(propertyModal) {
       propertyModal.addEventListener('click', (e) => {
         if(e.target === propertyModal) {
-          propertyModal.classList.add('hidden');
+          closeModal();
         }
       });
     }
+
+    // Close modal on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && propertyModal.classList.contains('active')) {
+        closeModal();
+      }
+    });
 
     // Search inputs
     const searchLocation = document.getElementById('searchLocation');
@@ -886,8 +977,8 @@
       cookieDiv.className = 'fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50';
       cookieDiv.innerHTML = `
         <div class="container mx-auto flex justify-between items-center flex-wrap gap-4">
-          <span>🍪 We use cookies to enhance your experience. By continuing, you agree to our cookie policy.</span>
-          <button id="acceptCookies" class="bg-[#d4af37] px-6 py-2 rounded-full hover:bg-[#b3922c] transition">Accept</button>
+          <span><i class="fas fa-cookie-bite mr-2"></i> We use cookies to enhance your experience. By continuing, you agree to our cookie policy.</span>
+          <button id="acceptCookies" class="bg-[#d4af37] px-6 py-2 rounded-full hover:bg-[#b3922c] transition"><i class="fas fa-check mr-2"></i>Accept</button>
         </div>
       `;
       document.body.appendChild(cookieDiv);
