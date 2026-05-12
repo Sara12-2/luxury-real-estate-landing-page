@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Luxury Estates | Premium Real Estate</title>
+  <!-- Google Fonts & Tailwind + Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Chart.js CDN (optional but included for stats) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * {
+      font-family: 'Inter', 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: #ffffff;
+      overflow-x: hidden;
+    }
+    /* Custom animation & shadow utilities */
+    .hover-lift {
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+    }
+    .card-shadow {
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+    .hero-overlay {
+      background: linear-gradient(100deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.3) 100%);
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    /* Mobile menu hidden by default */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    /* custom input focus */
+    input, select, textarea {
+      transition: all 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    }
+    .gold-accent {
+      color: #d4af37;
+    }
+    .btn-gold {
+      background-color: #d4af37;
+      transition: all 0.2s;
+    }
+    .btn-gold:hover {
+      background-color: #b3922c;
+      transform: scale(1.02);
+    }
+    .floating-wa {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 50;
+      background-color: #25D366;
+      border-radius: 60px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .floating-wa:hover {
+      transform: scale(1.08);
+    }
+    /* Hide scrollbar for counters animation */
+    .counter {
+      display: inline-block;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Sticky Navbar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <i class="fas fa-building text-2xl text-[#d4af37]"></i>
+        <span class="font-bold text-2xl tracking-tight text-gray-800">LUX<span class="text-[#d4af37]">ESTATE</span></span>
+      </div>
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
+        <a href="#home" class="hover:text-[#d4af37] transition">Home</a>
+        <a href="#properties" class="hover:text-[#d4af37] transition">Properties</a>
+        <a href="#about" class="hover:text-[#d4af37] transition">About</a>
+        <a href="#agents" class="hover:text-[#d4af37] transition">Agents</a>
+        <a href="#contact" class="hover:text-[#d4af37] transition">Contact</a>
+      </nav>
+      <div class="hidden md:block">
+        <a href="#contact" class="bg-[#d4af37] text-white px-5 py-2 rounded-full font-semibold text-sm shadow-md hover:bg-[#b3922c] transition">Book Consultation</a>
+      </div>
+      <!-- Mobile hamburger -->
+      <button id="menuBtn" class="md:hidden text-2xl text-gray-700 focus:outline-none">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu panel -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-white shadow-2xl z-50 p-6 flex flex-col gap-6">
+      <div class="flex justify-end">
+        <button id="closeMenuBtn" class="text-2xl"><i class="fas fa-times"></i></button>
+      </div>
+      <nav class="flex flex-col gap-5 text-gray-800 font-medium text-lg">
+        <a href="#home" class="py-2 border-b border-gray-100">Home</a>
+        <a href="#properties" class="py-2 border-b border-gray-100">Properties</a>
+        <a href="#about" class="py-2 border-b border-gray-100">About</a>
+        <a href="#agents" class="py-2 border-b border-gray-100">Agents</a>
+        <a href="#contact" class="py-2 border-b border-gray-100">Contact</a>
+        <a href="#contact" class="mt-3 bg-[#d4af37] text-center text-white px-4 py-2 rounded-full">Book Consultation</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative w-full h-[90vh] md:h-[85vh] bg-cover bg-center flex items-center" style="background-image: url('https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1600'); background-size: cover;">
+    <div class="hero-overlay absolute inset-0"></div>
+    <div class="relative container mx-auto px-6 text-white z-10">
+      <div class="max-w-2xl animate-fade-in-up">
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight">Find Your Dream Property Today</h1>
+        <p class="text-lg md:text-xl mt-4 text-gray-100">Luxury homes, premium villas & exclusive listings in Dubai, USA, UK. Experience excellence.</p>
+        <!-- Property Search Bar -->
+        <div class="mt-8 bg-white/20 backdrop-blur-md rounded-2xl p-5 shadow-2xl border border-white/30">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="relative">
+              <i class="fas fa-map-marker-alt absolute left-3 top-3 text-gray-600"></i>
+              <input type="text" placeholder="Location (Dubai, NY, London)" class="w-full pl-10 pr-3 py-3 rounded-xl bg-white/90 text-gray-800 border-0 focus:ring-2 focus:ring-[#d4af37]">
+            </div>
+            <div class="relative">
+              <i class="fas fa-building absolute left-3 top-3 text-gray-600"></i>
+              <select class="w-full pl-10 pr-3 py-3 rounded-xl bg-white/90 text-gray-800">
+                <option>Property Type</option><option>Apartment</option><option>Villa</option><option>Commercial</option><option>Luxury Home</option>
+              </select>
+            </div>
+            <div class="relative">
+              <i class="fas fa-dollar-sign absolute left-3 top-3 text-gray-600"></i>
+              <select class="w-full pl-10 pr-3 py-3 rounded-xl bg-white/90 text-gray-800">
+                <option>Budget Range</option><option>$500k - $1M</option><option>$1M - $3M</option><option>$3M+</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-4 justify-between mt-5">
+            <div class="flex gap-3">
+              <button class="bg-[#d4af37] text-white px-6 py-2 rounded-full font-semibold shadow">Explore Properties</button>
+              <button class="bg-white/90 text-gray-800 px-6 py-2 rounded-full font-semibold">Schedule Visit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Properties Section -->
+  <section id="properties" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Featured Properties</h2>
+        <p class="text-gray-500 mt-2">Handpicked luxury homes in prime locations</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-white rounded-2xl overflow-hidden card-shadow hover-lift transition-all">
+          <img src="https://images.pexels.com/photos/2587054/pexels-photo-2587054.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Property" class="h-56 w-full object-cover">
+          <div class="p-5">
+            <div class="flex justify-between items-start"><h3 class="text-xl font-bold">Sunset Palm Villa</h3><span class="text-[#d4af37] font-bold">$2.8M</span></div>
+            <p class="text-gray-500 text-sm mt-1"><i class="fas fa-map-marker-alt mr-1"></i> Palm Jumeirah, Dubai</p>
+            <div class="flex justify-between mt-3 text-gray-600 text-sm"><span><i class="fas fa-bed"></i> 5 Beds</span><span><i class="fas fa-bath"></i> 6 Baths</span><span><i class="fas fa-arrows-alt"></i> 4,500 sqft</span></div>
+            <button class="mt-5 w-full py-2 border border-[#d4af37] text-[#d4af37] rounded-xl font-medium hover:bg-[#d4af37] hover:text-white transition">View Details</button>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-white rounded-2xl overflow-hidden card-shadow hover-lift">
+          <img src="https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Property" class="h-56 w-full object-cover">
+          <div class="p-5"><div class="flex justify-between"><h3 class="text-xl font-bold">Manhattan Sky Penthouse</h3><span class="text-[#d4af37] font-bold">$4.2M</span></div>
+          <p class="text-gray-500 text-sm mt-1"><i class="fas fa-map-marker-alt"></i> NYC, USA</p>
+          <div class="flex justify-between mt-3 text-gray-600 text-sm"><span><i class="fas fa-bed"></i> 4 Beds</span><span><i class="fas fa-bath"></i> 4.5 Baths</span><span><i class="fas fa-arrows-alt"></i> 3,200 sqft</span></div>
+          <button class="mt-5 w-full py-2 border border-[#d4af37] rounded-xl font-medium hover:bg-[#d4af37] hover:text-white transition">View Details</button></div>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-white rounded-2xl overflow-hidden card-shadow hover-lift">
+          <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Property" class="h-56 w-full object-cover">
+          <div class="p-5"><div class="flex justify-between"><h3 class="text-xl font-bold">Knightsbridge Estate</h3><span class="text-[#d4af37] font-bold">£5.1M</span></div>
+          <p class="text-gray-500 text-sm"><i class="fas fa-map-marker-alt"></i> London, UK</p>
+          <div class="flex justify-between mt-3 text-gray-600 text-sm"><span><i class="fas fa-bed"></i> 6 Beds</span><span><i class="fas fa-bath"></i> 7 Baths</span><span><i class="fas fa-arrows-alt"></i> 6,200 sqft</span></div>
+          <button class="mt-5 w-full py-2 border border-[#d4af37] rounded-xl font-medium hover:bg-[#d4af37] hover:text-white transition">View Details</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section id="about" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold">Why Choose Us</h2><p class="text-gray-500">Unmatched excellence & global reach</p></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center p-6 rounded-2xl bg-gray-50 hover:shadow-lg transition"><i class="fas fa-check-circle text-4xl text-[#d4af37] mb-4"></i><h3 class="text-xl font-bold">Verified Listings</h3><p class="text-gray-500">100% authenticated properties</p></div>
+        <div class="text-center p-6 rounded-2xl bg-gray-50 hover:shadow-lg transition"><i class="fas fa-user-tie text-4xl text-[#d4af37] mb-4"></i><h3 class="text-xl font-bold">Trusted Agents</h3><p class="text-gray-500">Local experts in Dubai, US, UK</p></div>
+        <div class="text-center p-6 rounded-2xl bg-gray-50 hover:shadow-lg transition"><i class="fas fa-map-pin text-4xl text-[#d4af37] mb-4"></i><h3 class="text-xl font-bold">Premium Locations</h3><p class="text-gray-500">Prime addresses only</p></div>
+        <div class="text-center p-6 rounded-2xl bg-gray-50 hover:shadow-lg transition"><i class="fas fa-calendar-check text-4xl text-[#d4af37] mb-4"></i><h3 class="text-xl font-bold">Easy Booking</h3><p class="text-gray-500">Seamless & fast process</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Property Categories -->
+  <section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-6 text-center"><h2 class="text-3xl font-bold mb-8">Browse by Category</h2>
+      <div class="flex flex-wrap justify-center gap-5">
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold">🏢 Apartments</span>
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold">🏡 Villas</span>
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold">🏭 Commercial</span>
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold">✨ Luxury Homes</span>
+        <span class="bg-white px-6 py-3 rounded-full shadow-md font-semibold">📋 Rentals</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Section with animated counters & Chart.js optional chart -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div><div class="stat-number counter" data-target="1248">0</div><p class="text-gray-600 font-medium">Properties Sold</p></div>
+        <div><div class="stat-number counter" data-target="2890">0</div><p class="text-gray-600 font-medium">Happy Clients</p></div>
+        <div><div class="stat-number counter" data-target="35">0</div><p class="text-gray-600 font-medium">Cities Covered</p></div>
+        <div><div class="stat-number counter" data-target="18">0</div><p class="text-gray-600 font-medium">Years Experience</p></div>
+      </div>
+      <!-- optional Chart.js (analytics style) -->
+      <div class="max-w-2xl mx-auto mt-14 bg-gray-50 p-5 rounded-2xl">
+        <h3 class="text-center font-semibold mb-2">Market Growth Trend</h3>
+        <canvas id="marketChart" height="150"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet Our Agents -->
+  <section id="agents" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold">Meet Our Agents</h2>
+      <p class="mb-12 text-gray-500">Dedicated professionals for global clients</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl p-6 card-shadow hover-lift"><img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-28 h-28 rounded-full mx-auto object-cover border-4 border-[#d4af37]"><h3 class="mt-4 text-xl font-bold">Sophia Monroe</h3><p class="text-[#d4af37]">Luxury Specialist Dubai</p><div class="flex justify-center gap-4 mt-3 text-gray-500"><i class="fab fa-instagram hover:text-[#d4af37]"></i><i class="fab fa-linkedin-in hover:text-[#d4af37]"></i><i class="fab fa-twitter hover:text-[#d4af37]"></i></div></div>
+        <div class="bg-white rounded-2xl p-6 card-shadow hover-lift"><img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-28 h-28 rounded-full mx-auto object-cover border-4 border-[#d4af37]"><h3 class="mt-4 text-xl font-bold">James Carter</h3><p class="text-[#d4af37]">USA & UK Lead Agent</p><div class="flex justify-center gap-4 mt-3"><i class="fab fa-instagram hover:text-[#d4af37]"></i><i class="fab fa-linkedin-in hover:text-[#d4af37]"></i><i class="fab fa-twitter hover:text-[#d4af37]"></i></div></div>
+        <div class="bg-white rounded-2xl p-6 card-shadow hover-lift"><img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-28 h-28 rounded-full mx-auto object-cover border-4 border-[#d4af37]"><h3 class="mt-4 text-xl font-bold">Oliver Hassan</h3><p class="text-[#d4af37]">International Relations</p><div class="flex justify-center gap-4 mt-3"><i class="fab fa-instagram"></i><i class="fab fa-linkedin-in"></i><i class="fab fa-twitter"></i></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-10"><h2 class="text-3xl font-bold">What Clients Say</h2><p class="text-gray-500">Real experiences, global trust</p></div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-gray-50 p-8 rounded-2xl shadow-md"><div class="flex items-center gap-4"><img src="https://randomuser.me/api/portraits/men/21.jpg" class="w-14 h-14 rounded-full object-cover"><div><h4 class="font-bold">Ahmed Al-Rashid</h4><div class="text-[#d4af37]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div></div><p class="mt-4 italic">"Exceptional service! Found my dream villa in Dubai within weeks. Highly recommended."</p></div>
+        <div class="bg-gray-50 p-8 rounded-2xl shadow-md"><div class="flex items-center gap-4"><img src="https://randomuser.me/api/portraits/women/79.jpg" class="w-14 h-14 rounded-full object-cover"><div><h4 class="font-bold">Emily Watson</h4><div class="text-[#d4af37]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div></div><p class="mt-4 italic">"Professional agents & seamless process. The Manhattan penthouse is everything I wanted!"</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Inquiry Form -->
+  <section id="contact" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6 max-w-4xl">
+      <div class="bg-white rounded-3xl shadow-xl p-8 md:p-10">
+        <h2 class="text-3xl font-bold text-center mb-2">Request a Consultation</h2>
+        <p class="text-center text-gray-500 mb-8">Fill out the form, our luxury advisors will reach within 24h</p>
+        <form id="contactForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <input type="text" placeholder="Full Name" class="border border-gray-300 rounded-xl px-5 py-3" required>
+          <input type="email" placeholder="Email Address" class="border border-gray-300 rounded-xl px-5 py-3" required>
+          <input type="tel" placeholder="Phone Number" class="border border-gray-300 rounded-xl px-5 py-3">
+          <select class="border border-gray-300 rounded-xl px-5 py-3"><option>Budget: $500k - $1M</option><option>$1M - $3M</option><option>$3M+</option></select>
+          <textarea rows="3" placeholder="Your message (preferred location, property type...)" class="md:col-span-2 border border-gray-300 rounded-xl px-5 py-3"></textarea>
+          <button type="submit" class="md:col-span-2 btn-gold text-white font-bold py-3 rounded-xl text-lg">Send Inquiry <i class="fas fa-paper-plane ml-2"></i></button>
+        </form>
+        <div id="formSuccess" class="hidden mt-4 text-center text-green-600 font-semibold">✔ Thank you! We’ll contact you soon.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 pt-14 pb-8">
+    <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div><h3 class="text-white text-xl font-bold mb-4">LUXESTATE</h3><p>Global luxury real estate connecting Dubai, USA, UK.</p><div class="flex gap-3 mt-4"><i class="fab fa-facebook-f text-xl hover:text-[#d4af37]"></i><i class="fab fa-instagram text-xl hover:text-[#d4af37]"></i><i class="fab fa-linkedin-in text-xl hover:text-[#d4af37]"></i></div></div>
+      <div><h4 class="text-white font-semibold mb-3">Quick Links</h4><ul class="space-y-2"><li><a href="#" class="hover:text-[#d4af37]">Properties</a></li><li><a href="#" class="hover:text-[#d4af37]">Agents</a></li><li><a href="#" class="hover:text-[#d4af37]">Testimonials</a></li></ul></div>
+      <div><h4 class="text-white font-semibold mb-3">Contact Info</h4><p><i class="fas fa-phone-alt mr-2"></i> +1 (888) 892-4678</p><p><i class="fas fa-envelope mr-2"></i> hello@luxestate.com</p><p><i class="fas fa-map-marker-alt mr-2"></i> Dubai | NYC | London</p></div>
+      <div><h4 class="text-white font-semibold mb-3">Newsletter</h4><div class="flex"><input type="email" placeholder="Your email" class="p-2 rounded-l-md w-full text-gray-800"><button class="bg-[#d4af37] px-4 rounded-r-md text-white"><i class="fas fa-arrow-right"></i></button></div></div>
+    </div>
+    <div class="text-center border-t border-gray-800 mt-10 pt-6 text-sm">© 2026 LuxEstate — Premier Real Estate. All rights reserved.</div>
+  </footer>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/971501234567?text=Hello%20I%20need%20luxury%20property%20consultation" target="_blank" class="floating-wa flex items-center gap-2 px-5 py-3 text-white font-semibold">
+    <i class="fab fa-whatsapp text-xl"></i> <span class="hidden sm:inline">Chat</span>
+  </a>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    function toggleMenu() { mobileMenu.classList.toggle('open'); }
+    if(menuBtn) menuBtn.addEventListener('click', toggleMenu);
+    if(closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+    document.querySelectorAll('#mobileMenu a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+    // Animated Counters with scroll trigger
+    const counters = document.querySelectorAll('.counter');
+    let started = false;
+    function animateCounters() {
+      if(started) return;
+      const statsSection = document.querySelector('.grid.grid-cols-2.md\\:grid-cols-4');
+      if(statsSection) {
+        const rect = statsSection.getBoundingClientRect();
+        if(rect.top < window.innerHeight-100 && !started) {
+          started = true;
+          counters.forEach(counter => {
+            const updateCount = () => {
+              const target = parseInt(counter.getAttribute('data-target'));
+              const current = parseInt(counter.innerText);
+              const increment = target / 70;
+              if(current < target) {
+                counter.innerText = Math.ceil(current + increment);
+                setTimeout(updateCount, 20);
+              } else { counter.innerText = target; }
+            };
+            updateCount();
+          });
+        }
+      }
+    }
+    window.addEventListener('scroll', animateCounters);
+    animateCounters();
+
+    // Chart.js (Market demo)
+    const ctx = document.getElementById('marketChart')?.getContext('2d');
+    if(ctx) {
+      new Chart(ctx, {
+        type: 'line',
+        data: { labels: ['2021','2022','2023','2024','2025'], datasets: [{ label: 'Avg Property Value ($M)', data: [1.2, 1.5, 1.8, 2.1, 2.6], borderColor: '#d4af37', backgroundColor: 'rgba(212,175,55,0.1)', tension: 0.3, fill: true }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top' } } }
+      });
+    }
+
+    // smooth scrolling for all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if(targetId === "#" || targetId === "") return;
+        const target = document.querySelector(targetId);
+        if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+    // search/filter UI simulated alert (just demo)
+    const exploreBtn = document.querySelector('.btn-gold, .bg-\\[\\#d4af37\\].text-white.px-6');
+    if(exploreBtn) exploreBtn.addEventListener('click', (e) => { if(e.target.innerText.includes('Explore')) alert("🔍 Explore our premium listings — filtering ready in full version"); });
+    // Form submission mock
+    const contactForm = document.getElementById('contactForm');
+    if(contactForm) contactForm.addEventListener('submit', (e) => { e.preventDefault(); document.getElementById('formSuccess').classList.remove('hidden'); contactForm.reset(); setTimeout(()=>document.getElementById('formSuccess').classList.add('hidden'),4000); });
+  </script>
+</body>
+</html>
