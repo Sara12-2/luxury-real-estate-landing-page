@@ -1,6 +1,8 @@
-# 🏰 Luxury Estates - Premium Real Estate Landing Page
+# 🏰 LuxEstate — Premium Real Estate Landing Page
 
-A modern, fully responsive landing page for a luxury real estate agency featuring interactive property listings, agent profiles, animated statistics, and lead generation forms.
+A modern, fully responsive luxury real estate landing page featuring interactive property listings, multi-currency support, mortgage calculator, wishlist, animated statistics, and lead generation forms.
+
+---
 
 ## 📋 Table of Contents
 
@@ -12,109 +14,243 @@ A modern, fully responsive landing page for a luxury real estate agency featurin
 - [Deployment](#deployment)
 - [Browser Support](#browser-support)
 - [Credits](#credits)
-- [License](#license)
+
+---
 
 ## ✨ Features
 
 ### Core Features
-- ✅ **Fully Responsive Design** - Optimized for all devices (mobile, tablet, desktop)
-- ✅ **Interactive Property Cards** - Hover effects and detailed property information
-- ✅ **Property Modal** - Popup with complete property details (closes with X, outside click, or ESC key)
-- ✅ **Animated Statistics Counter** - Numbers animate when scrolled into view
-- ✅ **Live Search/Filter** - Filter properties by location
-- ✅ **Mobile Navigation Menu** - Hamburger menu for mobile devices
-- ✅ **Smooth Scroll Navigation** - Smooth anchor scrolling between sections
-- ✅ **WhatsApp Integration** - Floating chat button for instant consultation
-- ✅ **Market Trends Chart** - Interactive Chart.js visualization
-- ✅ **Newsletter Signup** - Email subscription functionality
-- ✅ **Cookie Consent Banner** - GDPR compliant cookie notice
-- ✅ **Back to Top Button** - Easy navigation to top
-- ✅ **Progress Bar** - Shows scroll progress
-- ✅ **All Font Awesome Icons** - Professional icons throughout (no emojis)
 
-### Sections Included
-1. **Hero Section** - Main banner with property search filters
-2. **Featured Properties** - Dynamic property showcase (3 properties)
-3. **Why Choose Us** - 4 key selling points with icons
-4. **Property Categories** - 5 category filters with icons
-5. **Statistics Dashboard** - 4 animated counters
-6. **Market Growth Chart** - Line chart showing trends
-7. **Agent Profiles** - 3 agent profiles with social links
-8. **Client Testimonials** - 2 customer reviews with star ratings
-9. **Contact Form** - Lead generation consultation form
-10. **Footer** - Navigation, contact info, newsletter signup
+- ✅ **Fully Responsive Design** — Optimized for mobile, tablet, and desktop
+- ✅ **Multi-Currency Switcher** — Switch between USD, AED, and GBP in real time (header and mobile menu)
+- ✅ **Interactive Property Cards** — Hover effects, wishlist toggle, and quick detail access
+- ✅ **Property Modal** — Full-screen popup with image, description, features, and a schedule-viewing CTA. Closes via X button, outside click, or ESC key. Full keyboard focus trap.
+- ✅ **Wishlist System** — Save/unsave properties with animated toast notifications
+- ✅ **Live Search & Multi-Filter** — Filter by location (debounced text input), property type, budget range, and category chip simultaneously
+- ✅ **Mortgage Calculator** — Real-time monthly payment, total interest, and total amount estimates; respects active currency
+- ✅ **Animated Statistics Counters** — Numbers count up when scrolled into view (IntersectionObserver + easing)
+- ✅ **Market Growth Chart** — Interactive Chart.js line chart (2021–2025 avg property values)
+- ✅ **Mobile Navigation Drawer** — Slide-in hamburger menu with overlay and focus management
+- ✅ **Scroll Progress Bar** — Gold gradient bar at the top of the viewport
+- ✅ **Back to Top Button** — Appears after 500px scroll
+- ✅ **Smooth Scroll Navigation** — All anchor links scroll smoothly
+- ✅ **Contact Form with Validation** — Live blur validation for name and email; success/error feedback
+- ✅ **Newsletter Signup** — Email validation with inline feedback (footer)
+- ✅ **WhatsApp Floating Button** — Pre-filled message link for instant consultation
+- ✅ **Cookie Consent Banner** — GDPR-style banner with Accept/Decline; preference stored in localStorage
+- ✅ **Accessibility** — Skip link, ARIA labels, roles, `aria-live` regions, focus-visible styles, reduced-motion support
+- ✅ **SEO Ready** — Semantic HTML5, Open Graph tags, Twitter Card meta, canonical URL, robots meta
+
+### Sections
+
+| # | Section | Description |
+|---|---------|-------------|
+| 1 | **Hero** | Full-viewport background with parallax (desktop), location/type/budget search bar |
+| 2 | **Featured Properties** | Filterable grid of 6 property cards |
+| 3 | **Why Choose Us** | 4 feature highlights with hover-scale cards |
+| 4 | **Browse by Category** | Category pill buttons that sync with the filter chips above |
+| 5 | **Statistics** | Animated counters (properties sold, clients, cities, years) |
+| 6 | **Market Growth Chart** | Chart.js line chart |
+| 7 | **Mortgage Calculator** | Loan amount, rate, term inputs with live output |
+| 8 | **Meet Our Agents** | 3 agent cards with deal count, languages, response time, social links |
+| 9 | **Testimonials** | 2 client reviews with star ratings |
+| 10 | **Contact / Consultation Form** | Name, email, phone, budget, message; trust badges |
+| 11 | **Footer** | Quick links, contact info, social icons, newsletter signup |
+
+---
 
 ## 🛠️ Technologies Used
 
-| Technology | Purpose |
-|------------|---------|
-| **HTML5** | Semantic markup structure |
-| **Tailwind CSS** | Utility-first CSS framework |
-| **JavaScript (ES6)** | Interactive elements and animations |
-| **Chart.js** | Market trend visualization |
-| **Font Awesome 6** | Professional icon library |
-| **Google Fonts** | Inter & Poppins typography |
+| Technology | Version / Source | Purpose |
+|------------|-----------------|---------|
+| **HTML5** | — | Semantic markup, accessibility |
+| **Tailwind CSS** | CDN (latest) | Utility-first layout & responsive design |
+| **JavaScript (ES6+)** | Vanilla | All interactivity — no frameworks |
+| **Chart.js** | 4.4.0 (CDN) | Market trend line chart |
+| **Font Awesome** | 6.0.0-beta3 (CDN) | Icon library throughout |
+| **Google Fonts** | Inter & Poppins | Typography |
+| **Pexels / RandomUser** | External URLs | Demo property images & agent photos |
+
+---
 
 ## 📁 File Structure
 
-```bash
-uxury-real-estate/
-│
-└── index.html # Complete website (single file)
+```
+luxury-real-estate/
+├── index.html   # HTML structure, sections, and markup
+├── main.js      # All JavaScript — data, filters, modal, calculator, etc.
+└── style.css    # Custom CSS — animations, components, responsive tweaks
 ```
 
+> Tailwind CSS, Chart.js, Font Awesome, and Google Fonts are loaded via CDN. No build step or package manager is required.
 
-**Note:** This is a single-file project. No additional folders, images, or assets are needed. Everything is self-contained in one HTML file.
+---
 
 ## 🚀 Installation & Setup
 
-### Local Development
+### Option 1 — Open directly in browser
 
-1. **Save the HTML code** as `index.html` on your computer
+1. Clone or download the repository
+2. Open `index.html` in any modern browser
 
-2. **Open the file** in your browser:
-   - Double-click the `index.html` file, OR
-   - Use a local development server:
-   
-   ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using Node.js
-   npx http-server
-   ```
-3. ### Start customizing the content in any text editor (VS Code, Notepad++, etc.)
+### Option 2 — Local dev server (recommended)
 
-# 🏰 Luxury Estates - Premium Real Estate Landing Page
+```bash
+# Python
+python -m http.server 8000
 
-A modern, fully responsive landing page for a luxury real estate agency featuring interactive property listings, agent profiles, animated statistics, and lead generation forms.
+# Node.js (npx)
+npx http-server .
 
-## 📋 Quick Copy Instructions
+# VS Code — use the Live Server extension
+```
 
-1. **Select all** (Ctrl+A)
-2. **Copy** (Ctrl+C)
-3. **Create new file** named `index.html`
-4. **Paste** (Ctrl+V)
-5. **Save** (Ctrl+S)
+Then visit `http://localhost:8000` in your browser.
 
-That's it! Open the file in any browser to view your luxury real estate landing page.
-
-**No additional files, folders, or dependencies needed!** 🎉
+> All three files (`index.html`, `main.js`, `style.css`) must be in the same directory.
 
 ---
 
 ## 🎨 Customization Guide
 
-### Changing Colors
+### Brand Color
 
-The primary brand color is gold (`#d4af37`). To change it:
+The primary gold accent is `#d4af37`. To change it, find-and-replace across all three files:
 
-1. Search for `#d4af37` in the HTML file
-2. Replace with your desired color code (e.g., `#3b82f6` for blue)
+```
+#d4af37  →  your-color
+#b3922c  →  your-color-dark  (hover/gradient variant)
+```
+
+Tailwind arbitrary values to update: `bg-[#d4af37]`, `text-[#d4af37]`, `border-[#d4af37]`, etc.
+
+---
+
+### Property Listings
+
+Edit the `properties` array at the top of `main.js`:
+
+```js
+const properties = [
+  {
+    id: 1,
+    title: 'Sunset Palm Villa',
+    priceUSD: 2800000,          // Always in USD; currency conversion is automatic
+    location: 'Palm Jumeirah, Dubai',
+    city: 'dubai',              // Used for location search matching
+    type: 'Villa',              // Must match a filter chip: Villa | Apartment | Luxury Home | Commercial
+    budget: '1m-3m',            // 500k-1m | 1m-3m | 3m+
+    beds: 5,
+    baths: 6,
+    sqft: 4500,
+    image: 'https://...',
+    description: '...',
+    features: ['Feature 1', 'Feature 2'],
+  },
+  // ...
+];
+```
+
+---
+
+### Currency Rates
+
+Update exchange rates in `main.js`:
+
+```js
+const CURRENCY_CONFIG = {
+  USD: { symbol: '$',    rate: 1,    label: 'USD' },
+  AED: { symbol: 'AED ', rate: 3.67, label: 'AED' },
+  GBP: { symbol: '£',   rate: 0.79, label: 'GBP' },
+};
+```
+
+To add a new currency (e.g. EUR), add an entry here and a matching `.currency-btn` button in both the desktop and mobile nav in `index.html`.
+
+---
+
+### Agents
+
+Edit the three `<article class="agent-card ...">` blocks in the `#agents` section of `index.html`. Update the name, title, deal count, languages, response time, and social links.
+
+---
+
+### Hero Background
+
+In `style.css`, replace the Pexels URL:
 
 ```css
-/* Find and replace these */
-bg-[#d4af37]
-text-[#d4af37]
-border-[#d4af37]
-from-[#d4af37]
+.hero-section {
+  background-image: url('your-image-url.jpg');
+}
+```
+
+---
+
+### WhatsApp Number
+
+In `index.html`, update the floating button `href`:
+
+```html
+<a href="https://wa.me/YOUR_NUMBER?text=Your+message">
+```
+
+---
+
+### Market Chart Data
+
+In `main.js`, find `initChart()` and update the `labels` and `data` arrays:
+
+```js
+labels: ['2021', '2022', '2023', '2024', '2025'],
+data: [1.2, 1.5, 1.8, 2.1, 2.6],
+```
+
+---
+
+## 🌐 Deployment
+
+### GitHub Pages
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/your-username/your-repo.git
+git push -u origin main
+# Enable GitHub Pages in repo Settings → Pages → Branch: main
+```
+
+### Netlify / Vercel
+
+Drag and drop the project folder into [netlify.com/drop](https://app.netlify.com/drop) or import the repo in the Vercel dashboard. No build configuration needed.
+
+---
+
+## 🖥️ Browser Support
+
+| Browser | Support |
+|---------|---------|
+| Chrome 90+ | ✅ Full |
+| Firefox 88+ | ✅ Full |
+| Safari 14+ | ✅ Full |
+| Edge 90+ | ✅ Full |
+| IE 11 | ❌ Not supported |
+
+> `backdrop-filter` (glassmorphism) requires a modern browser. The layout degrades gracefully without it.
+
+---
+
+## 📄 Credits
+
+- Property photos — [Pexels](https://www.pexels.com)
+- Agent avatars — [RandomUser.me](https://randomuser.me)
+- Icons — [Font Awesome](https://fontawesome.com)
+- Charts — [Chart.js](https://www.chartjs.org)
+- CSS utilities — [Tailwind CSS](https://tailwindcss.com)
+
+---
+
+## 📝 License
+
+© 2026 LuxEstate. All rights reserved.
