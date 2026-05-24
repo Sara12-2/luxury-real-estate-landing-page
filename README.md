@@ -6,6 +6,7 @@ A modern, fully responsive luxury real estate landing page featuring interactive
 
 ## 📋 Table of Contents
 
+- [Screenshots](#screenshots)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [File Structure](#file-structure)
@@ -14,6 +15,37 @@ A modern, fully responsive luxury real estate landing page featuring interactive
 - [Deployment](#deployment)
 - [Browser Support](#browser-support)
 - [Credits](#credits)
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Home
+![Home](home.png)
+
+### 🏘️ Properties
+![Properties](properties.png)
+
+### ⭐ Why Choose Us
+![Why Choose Us](why%20choose%20us.png)
+
+### 🗂️ Browse by Category
+![Browse by Category](browse%20by%20categary.png)
+
+### 👥 Agents
+![Agents](agents.png)
+
+### 🧮 Mortgage Calculator
+![Calculator](calculator.png)
+
+### 💬 Client Testimonials
+![Clients](clients.png)
+
+### 📋 Consultation Form
+![Consultation](consultation.png)
+
+### 🦶 Footer
+![Footer](footer.png)
 
 ---
 
