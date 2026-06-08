@@ -248,7 +248,7 @@ data: [1.2, 1.5, 1.8, 2.1, 2.6],
 git init
 git add .
 git commit -m "Initial commit"
-git remote add origin https://github.com/your-username/your-repo.git
+git remote add origin Sara12-2/luxury-real-estate-landing-page.git
 git push -u origin main
 # Enable GitHub Pages in repo Settings → Pages → Branch: main
 ```
